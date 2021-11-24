@@ -1,171 +1,216 @@
 import React from 'react';
-import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {
-  Avatar,
-  Title,
-  Caption,
+  View,
   Text,
-  TouchableRipple,
-} from 'react-native-paper';
+  ScrollView,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ImageBackground
+} from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Avatar} from 'react-native-paper';
+import {th} from 'date-fns/locale';
+import {format} from 'date-fns';
 
-import Share from 'react-native-share';
+import {globeStyles} from '../styles/globle';
 
-import files from '../assets/filesBase64';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ProfileScreen = () => {
-
-  const myCustomShare = async() => {
-    const shareOptions = {
-      message: 'Order your next meal from FoodFinder App. I\'ve already ordered more than 10 meals on it.',
-      url: files.appLogo,
-      // urls: [files.image1, files.image2]
-    }
-
-    try {
-      const ShareResponse = await Share.open(shareOptions);
-      console.log(JSON.stringify(ShareResponse));
-    } catch(error) {
-      console.log('Error => ', error);
-    }
-  };
-
+const ProfileScreen = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.container}>
-
-      <View style={styles.userInfoSection}>
-        <View style={{flexDirection: 'row', marginTop: 15}}>
-          <Avatar.Image 
+    <ScrollView>
+      <ImageBackground
+        source={require('../assets/background_gray.jpg')}
+        style={{flex: 1}}
+        resizeMode="cover">
+        <View style={{paddingHorizontal: 20, paddingTop: 20}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              <Image
+                source={require('../assets/back.png')}
+                style={{width: 50, height: 50}}
+              />
+            </TouchableOpacity>
+            <Text style={[styles.text, globeStyles.fontBold]}>MY PROFILE</Text>
+            <TouchableOpacity>
+              <Image
+                source={require('../assets/setting.png')}
+                style={{width: 50, height: 50}}
+              />
+            </TouchableOpacity>
+          </View>
+          <Avatar.Image
             source={{
               uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
             }}
-            size={80}
+            size={75}
           />
-          <View style={{marginLeft: 20}}>
-            <Title style={[styles.title, {
-              marginTop:15,
-              marginBottom: 5,
-            }]}>John Doe</Title>
-            <Caption style={styles.caption}>@j_doe</Caption>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View>
+              <Text style={[styles.text, globeStyles.fontBold]}>MY TODAY</Text>
+              <Text style={[globeStyles.font, {fontSize: 15}]}>
+                {format(new Date(), 'dd MMMM yyyy', {locale: th})}
+              </Text>
+            </View>
+            <TouchableOpacity
+             onPress={()=>{navigation.navigate('SaveATK')}}
+            >
+              <Image
+                source={require('../assets/scan.png')}
+                style={{width: 200, height: 50}}
+              />
+            </TouchableOpacity>
           </View>
         </View>
-      </View>
 
-      <View style={styles.userInfoSection}>
-        <View style={styles.row}>
-          <Icon name="map-marker-radius" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>Kolkata, India</Text>
+        <View style={globeStyles.cardlayout}>
+          <Text />
+          <View style={[globeStyles.cardinside]}>
+            <View style={[styles.flexRow, {justifyContent: 'space-around'}]}>
+              <Text style={[globeStyles.font, {fontSize: 20}]}>
+                xxxxxxxxxxx
+              </Text>
+              <View
+                style={{
+                  borderRightWidth: 1,
+                  height: 50,
+                  borderColor: '#287094',
+                }}
+              />
+              <Text style={[globeStyles.font, {fontSize: 20}]}>
+                xxxxxxxxxxx
+              </Text>
+            </View>
+            <View style={styles.borderBot} />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('SaveATK');
+              }}>
+              <View style={[styles.flexRow, {justifyContent: 'space-between'}]}>
+                <Text
+                  style={[globeStyles.font, {paddingStart: 40, fontSize: 20}]}>
+                  บันทึกประวัติ ATK
+                </Text>
+                <View />
+                <MaterialCommunityIcons
+                  name="menu-right"
+                  size={50}
+                  style={{color: '#287094'}}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.borderBot} />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('MenuCheck');
+              }}>
+              <View style={[styles.flexRow, {justifyContent: 'space-between'}]}>
+                <Text
+                  style={[globeStyles.font, {paddingStart: 40, fontSize: 20}]}>
+                  รายการตรวจ ATK
+                </Text>
+                <View />
+                <MaterialCommunityIcons
+                  name="menu-right"
+                  size={50}
+                  style={{color: '#287094'}}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.borderBot} />
+            <TouchableOpacity>
+              <View style={[styles.flexRow, {justifyContent: 'space-between'}]}>
+                <Text
+                  style={[globeStyles.font, {paddingStart: 40, fontSize: 20}]}>
+                  ดาวน์โหลดรายการตรวจ ATK
+                </Text>
+                <View />
+                <MaterialCommunityIcons
+                  name="menu-right"
+                  size={50}
+                  style={{color: '#287094'}}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.borderBot} />
+            <TouchableOpacity>
+              <View style={[styles.flexRow, {justifyContent: 'space-between'}]}>
+                <Text
+                  style={[globeStyles.font, {paddingStart: 40, fontSize: 20}]}>
+                  หน่วยงานที่รับผิดชอบ
+                </Text>
+                <View />
+                <MaterialCommunityIcons
+                  name="menu-right"
+                  size={50}
+                  style={{color: '#287094'}}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.borderBot} />
+            <TouchableOpacity>
+              <View style={[styles.flexRow, {justifyContent: 'space-between'}]}>
+                <Text
+                  style={[globeStyles.font, {paddingStart: 40, fontSize: 20}]}>
+                  ข้อมูล
+                </Text>
+                <View />
+                <MaterialCommunityIcons
+                  name="menu-right"
+                  size={50}
+                  style={{color: '#287094'}}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.borderBot} />
+            <TouchableOpacity>
+              <View style={[styles.flexRow, {justifyContent: 'space-between'}]}>
+                <Text
+                  style={[globeStyles.font, {paddingStart: 40, fontSize: 20}]}>
+                  ข้อมูล
+                </Text>
+                <View />
+                <MaterialCommunityIcons
+                  name="menu-right"
+                  size={50}
+                  style={{color: '#287094'}}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.borderBot} />
+          </View>
         </View>
-        <View style={styles.row}>
-          <Icon name="phone" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>+91-900000009</Text>
-        </View>
-        <View style={styles.row}>
-          <Icon name="email" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>john_doe@email.com</Text>
-        </View>
-      </View>
-
-      <View style={styles.infoBoxWrapper}>
-          <View style={[styles.infoBox, {
-            borderRightColor: '#dddddd',
-            borderRightWidth: 1
-          }]}>
-            <Title>₹140.50</Title>
-            <Caption>Wallet</Caption>
-          </View>
-          <View style={styles.infoBox}>
-            <Title>12</Title>
-            <Caption>Orders</Caption>
-          </View>
-      </View>
-
-      <View style={styles.menuWrapper}>
-        <TouchableRipple onPress={() => {}}>
-          <View style={styles.menuItem}>
-            <Icon name="heart-outline" color="#FF6347" size={25}/>
-            <Text style={styles.menuItemText}>Your Favorites</Text>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
-          <View style={styles.menuItem}>
-            <Icon name="credit-card" color="#FF6347" size={25}/>
-            <Text style={styles.menuItemText}>Payment</Text>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={myCustomShare}>
-          <View style={styles.menuItem}>
-            <Icon name="share-outline" color="#FF6347" size={25}/>
-            <Text style={styles.menuItemText}>Tell Your Friends</Text>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
-          <View style={styles.menuItem}>
-            <Icon name="account-check-outline" color="#FF6347" size={25}/>
-            <Text style={styles.menuItemText}>Support</Text>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
-          <View style={styles.menuItem}>
-            <Icon name="settings-outline" color="#FF6347" size={25}/>
-            <Text style={styles.menuItemText}>Settings</Text>
-          </View>
-        </TouchableRipple>
-      </View>
-    </SafeAreaView>
+      </ImageBackground>
+    </ScrollView>
   );
 };
-
-export default ProfileScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#D3D3D3',
   },
-  userInfoSection: {
-    paddingHorizontal: 30,
-    marginBottom: 25,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  caption: {
-    fontSize: 14,
-    lineHeight: 14,
-    fontWeight: '500',
-  },
-  row: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  infoBoxWrapper: {
-    borderBottomColor: '#dddddd',
+  borderBot: {
     borderBottomWidth: 1,
-    borderTopColor: '#dddddd',
-    borderTopWidth: 1,
-    flexDirection: 'row',
-    height: 100,
+    width: '90%',
+    alignSelf: 'center',
+    borderColor: '#287094',
   },
-  infoBox: {
-    width: '50%',
+  flexRow: {
+    flexDirection: 'row',
+    paddingVertical: 20,
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  menuWrapper: {
-    marginTop: 10,
-  },
-  menuItem: {
-    flexDirection: 'row',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-  },
-  menuItemText: {
-    color: '#777777',
-    marginLeft: 20,
-    fontWeight: '600',
-    fontSize: 16,
-    lineHeight: 26,
+  text: {
+    fontSize: 25,
   },
 });
+export default ProfileScreen;

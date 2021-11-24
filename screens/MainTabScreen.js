@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwsome from 'react-native-vector-icons/FontAwesome';
 
 import HomeScreen from './HomeScreen';
 import NotificationScreen from './NotificationScreen';
@@ -19,33 +20,56 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import CardListScreen from './CardListScreen';
 import CardItemDetails from './CardItemDetails';
 
+import SaveATKScreen from './SaveATKScreen';
+import MenuCheckATKScreen from './MenuCheckATKScreen';
+import LoginScreen from './LoginScreen';
+import RegisterScreen from './RegisterScreen';
+import NewsSreen from './NewsSreen';
+import SignInScreen from './SignUpScreen';
+import SignUpScreen from './SignUpScreen';
+
+
 const HomeStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const NewsStack = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
 
 const MainTabScreen = () => (
   <Tab.Navigator initialRouteName="Home" activeColor="#fff">
+   
+    <Tab.Screen
+      name="Notifications"
+      component={NewsStackStackScreen}
+      options={{
+        tabBarLabel: 'ข่าวสาร',
+        tabBarColor: '#023246',
+        tabBarIcon: ({color}) => (
+          <FontAwsome name="globe" color={color} size={26} />
+        ),
+      }}
+    />
     <Tab.Screen
       name="Home"
       component={HomeStackScreen}
       options={{
-        tabBarLabel: 'Home',
-        tabBarColor: '#FF6347',
+        tabBarLabel: 'หน้าหลัก',
+        tabBarColor: '#023246',
         tabBarIcon: ({color}) => (
           <Icon name="ios-home" color={color} size={26} />
         ),
       }}
     />
+
     <Tab.Screen
-      name="Notifications"
-      component={NotificationStackScreen}
+      name="ATKReport"
+      component={MenuCheckATKScreen}
       options={{
-        tabBarLabel: 'Updates',
-        tabBarColor: '#1f65ff',
+        tabBarLabel: 'ประวัติATK',
+        tabBarColor: '#023246',
         tabBarIcon: ({color}) => (
-          <Icon name="ios-notifications" color={color} size={26} />
+          <MaterialCommunityIcons name="book" color={color} size={26} />
         ),
       }}
     />
@@ -53,21 +77,10 @@ const MainTabScreen = () => (
       name="Profile"
       component={ProfileStackScreen}
       options={{
-        tabBarLabel: 'Profile',
-        tabBarColor: '#694fad',
+        tabBarLabel: 'PROFILE',
+        tabBarColor: '#023246',
         tabBarIcon: ({color}) => (
           <Icon name="ios-person" color={color} size={26} />
-        ),
-      }}
-    />
-    <Tab.Screen
-      name="Explore"
-      component={ExploreScreen}
-      options={{
-        tabBarLabel: 'Explore',
-        tabBarColor: '#d02860',
-        tabBarIcon: ({color}) => (
-          <Icon name="ios-aperture" color={color} size={26} />
         ),
       }}
     />
@@ -81,6 +94,7 @@ const HomeStackScreen = ({navigation}) => {
   return (
     <HomeStack.Navigator
       screenOptions={{
+        headerShown: false,
         headerStyle: {
           backgroundColor: colors.background,
           shadowColor: colors.background, // iOS
@@ -95,53 +109,21 @@ const HomeStackScreen = ({navigation}) => {
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'FoodFinder',
-          headerLeft: () => (
-            <View style={{marginLeft: 10}}>
-              <Icon.Button
-                name="ios-menu"
-                size={25}
-                color={colors.text}
-                backgroundColor={colors.background}
-                onPress={() => navigation.openDrawer()}
-              />
-            </View>
-          ),
+          title: '',
           headerRight: () => (
-            <View style={{flexDirection: 'row', marginRight: 10}}>
-              <Icon.Button
-                name="ios-search"
-                size={25}
-                color={colors.text}
-                backgroundColor={colors.background}
-                onPress={() => {}}
-              />
-              <TouchableOpacity
-                style={{paddingHorizontal: 10, marginTop: 5}}
-                onPress={() => {
-                  navigation.navigate('Profile');
-                }}>
-                <Avatar.Image
-                  source={{
-                    uri:
-                      'https://api.adorable.io/avatars/80/abott@adorable.png',
-                  }}
-                  size={30}
-                />
-              </TouchableOpacity>
-            </View>
+            <View style={{flexDirection: 'row', marginRight: 10}} />
           ),
         }}
       />
-      <HomeStack.Screen 
+      <HomeStack.Screen
         name="CardListScreen"
         component={CardListScreen}
         options={({route}) => ({
           title: route.params.title,
-          headerBackTitleVisible: false
+          headerBackTitleVisible: false,
         })}
       />
-      <HomeStack.Screen 
+      <HomeStack.Screen
         name="CardItemDetails"
         component={CardItemDetails}
         options={({route}) => ({
@@ -149,7 +131,7 @@ const HomeStackScreen = ({navigation}) => {
           headerBackTitleVisible: false,
           headerTitle: false,
           headerTransparent: true,
-          headerTintColor: '#fff'
+          headerTintColor: '#fff',
         })}
       />
     </HomeStack.Navigator>
@@ -190,41 +172,11 @@ const ProfileStackScreen = ({navigation}) => {
   return (
     <ProfileStack.Navigator
       screenOptions={{
-        headerStyle: {
-          backgroundColor: colors.background,
-          shadowColor: colors.background, // iOS
-          elevation: 0, // Android
-        },
-        headerTintColor: colors.text,
+        headerShown: false,
       }}>
       <ProfileStack.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{
-          title: '',
-          headerLeft: () => (
-            <View style={{marginLeft: 10}}>
-              <Icon.Button
-                name="ios-menu"
-                size={25}
-                backgroundColor={colors.background}
-                color={colors.text}
-                onPress={() => navigation.openDrawer()}
-              />
-            </View>
-          ),
-          headerRight: () => (
-            <View style={{marginRight: 10}}>
-              <MaterialCommunityIcons.Button
-                name="account-edit"
-                size={25}
-                backgroundColor={colors.background}
-                color={colors.text}
-                onPress={() => navigation.navigate('EditProfile')}
-              />
-            </View>
-          ),
-        }}
       />
       <ProfileStack.Screen
         name="EditProfile"
@@ -233,6 +185,36 @@ const ProfileStackScreen = ({navigation}) => {
         }}
         component={EditProfileScreen}
       />
+      <ProfileStack.Screen
+        name="SaveATK"
+        options={{
+          title: 'Save ATK',
+        }}
+        component={SaveATKScreen}
+      />
+      <ProfileStack.Screen
+        name="MenuCheck"
+        options={{
+          title: 'Check ATK',
+        }}
+        component={MenuCheckATKScreen}
+      />
     </ProfileStack.Navigator>
+  );
+};
+
+
+const NewsStackStackScreen = ({navigation}) => {
+  
+  return (
+    <NewsStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <NewsStack.Screen
+        name="News"
+        component={NewsSreen}
+      />
+    </NewsStack.Navigator>
   );
 };
