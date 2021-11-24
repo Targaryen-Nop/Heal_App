@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
+  Platform,
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
 import {Avatar} from 'react-native-paper';
@@ -17,11 +18,14 @@ import {globeStyles} from '../styles/globle';
 const HomeScreen = ({navigation}) => {
   const theme = useTheme();
   return (
+    <ImageBackground
+    source={require('../assets/background_gray.jpg')}
+    style={[{flex: 1, ...Platform.select({
+      ios:{paddingTop:20}
+    })}]}
+    resizeMode="cover">
     <ScrollView style={styles.container}>
-      <ImageBackground
-        source={require('../assets/background_gray.jpg')}
-        style={{flex: 1}}
-        resizeMode="cover">
+     
         <View style={{paddingHorizontal: 20, paddingTop: 20}}>
           <Image
             source={require('../assets/logo.png')}
@@ -202,8 +206,9 @@ const HomeScreen = ({navigation}) => {
             </View>
           </View>
         </View>
-      </ImageBackground>
+   
     </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -212,7 +217,6 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#D3D3D3',
   },
   cardBig: {
     width: 200,

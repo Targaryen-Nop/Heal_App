@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
   ImageBackground,
+  Platform
 } from 'react-native';
 
 import {Avatar} from 'react-native-paper';
@@ -21,27 +22,34 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const SaveATKScreen = ({navigation}) => {
   const [image, setImage] = React.useState();
-  const openCamera = () => {
-    launchCamera({}, async response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        const source = {uri: response.assets[0].uri};
-        await setImage(source.uri);
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-      }
-    });
+  const openCamera = async() => {
+    if(Platform.OS === "ios"){
+      await launchCamera()
+
+    }else if(Platform.OS === "android"){
+      launchCamera({}, async response => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          const source = {uri: response.assets[0].uri};
+          await setImage(source.uri);
+          // You can also display the image using data:
+          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+        }
+      })
+    }
   };
   return (
     <ScrollView>
       <ImageBackground
         source={require('../assets/background_gray.jpg')}
-        style={{flex: 1}}
+        style={{flex: 1,...Platform.select({
+          ios:{paddingTop:30}
+        })}}
         resizeMode="cover">
         <View style={{paddingHorizontal: 20, paddingTop: 20}}>
           <View

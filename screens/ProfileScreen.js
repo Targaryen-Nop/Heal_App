@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,Platform
 } from 'react-native';
 
 import {Avatar} from 'react-native-paper';
@@ -19,11 +19,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const ProfileScreen = ({navigation}) => {
   return (
+    <ImageBackground
+    source={require('../assets/background_gray.jpg')}
+    style={{flex: 1,...Platform.select({
+      ios:{paddingTop:30}
+    })}}
+    resizeMode="cover">
     <ScrollView>
-      <ImageBackground
-        source={require('../assets/background_gray.jpg')}
-        style={{flex: 1}}
-        resizeMode="cover">
+     
         <View style={{paddingHorizontal: 20, paddingTop: 20}}>
           <View
             style={{
@@ -189,8 +192,9 @@ const ProfileScreen = ({navigation}) => {
             <View style={styles.borderBot} />
           </View>
         </View>
-      </ImageBackground>
+     
     </ScrollView>
+    </ImageBackground>
   );
 };
 const styles = StyleSheet.create({

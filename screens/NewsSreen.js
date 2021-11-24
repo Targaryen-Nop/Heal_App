@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
+  Platform
 } from 'react-native';
 
 import {Avatar} from 'react-native-paper';
@@ -16,6 +17,7 @@ import {format} from 'date-fns';
 import {globeStyles} from '../styles/globle';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 import axios from 'axios';
 
@@ -46,11 +48,14 @@ React.useEffect(()=>{
   
 },[])
   return (
-    <ScrollView>
-      <ImageBackground
+    <ImageBackground
         source={require('../assets/background_gray.jpg')}
-        style={{flex: 1}}
+        style={{flex: 1,...Platform.select({
+          ios:{paddingTop:30}
+        })}}
         resizeMode="cover">
+    <ScrollView>
+      
         <View style={{paddingHorizontal: 20, paddingVertical: 20}}>
           <View
             style={{
@@ -86,8 +91,9 @@ React.useEffect(()=>{
            </TouchableOpacity>
           </View>
         </View>
-      </ImageBackground>
+      
     </ScrollView>
+     </ImageBackground>
   );
 };
 

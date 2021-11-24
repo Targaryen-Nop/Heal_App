@@ -8,13 +8,13 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Alert
+  Alert,Platform
 } from 'react-native';
 
 import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
 
-
+import {globeStyles} from '../styles/globle';
 
 import {AuthContext} from '../components/context';
 import axios from 'axios';
@@ -127,7 +127,7 @@ const LoginScreen = ({navigation}) => {
             resizeMode="contain"
           />
           <View style={{marginTop: 75}}>
-            <Text style={[ {fontSize: 20}]}>
+            <Text style={[globeStyles.fontWhite, {fontSize: 20}]}>
               {' '}
               Login to your Account
             </Text>
@@ -174,8 +174,8 @@ const LoginScreen = ({navigation}) => {
 
             <View
               style={{flexDirection: 'row', padding: 20, alignItems: 'center'}}>
-              <CheckBox value={isSelected} onValueChange={setSelection} />
-              <Text>Remember me</Text>
+             
+              <Text style={globeStyles.fontWhite}>Remember me</Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
               <TouchableOpacity
@@ -190,8 +190,8 @@ const LoginScreen = ({navigation}) => {
                   },
                   styles.shadow,
                 ]}
-                onPress={()=>navigation.navigate('RegisterScreen')}>
-                <Text style={[ {fontSize: 20}]}>Register</Text>
+                onPress={()=>{navigation.navigate('RegisterScreen')}}>
+                <Text style={[globeStyles.font, {fontSize: 20}]}>Register</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[
@@ -208,7 +208,7 @@ const LoginScreen = ({navigation}) => {
                 ]}
                 onPress={()=>{loginHandle(data.username, data.password)}}
                 >
-                <Text style={[ {fontSize: 20}]}>
+                <Text style={[globeStyles.fontWhite, {fontSize: 20}]}>
                   Sign in
                 </Text>
               </TouchableOpacity>
@@ -225,6 +225,9 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+    ...Platform.select({
+      ios:{paddingTop:100}
+    })
   },
   logo: {
     width: 200,

@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import {globeStyles} from '../styles/globle';
-import Feather from 'react-native-vector-icons/Feather';
+
 
 import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
@@ -224,7 +224,7 @@ const RegisterScreen = ({navigation}) => {
     });
     // console.log(data);
     // console.log(resp.data);
-  
+   
     if (data.isValidPhone == false || data.isValidIdcard == false) {
       Alert.alert('Wrong !!!', 'Phone or IDcard field cannot be empty.', [
         {text: 'Okay'},
@@ -245,179 +245,186 @@ const RegisterScreen = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <ImageBackground
+    <ImageBackground
         source={require('../assets/background.jpg')}
         resizeMode="cover"
         style={styles.image}>
-        <ScrollView >
+   
+        <View style={{alignItems: 'center', marginTop: 50}}>
+          <Image
+            source={require('../assets/logo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+           <ScrollView >
       
-      <View style={{alignItems: 'center'}}>
-        <TextInput
-          placeholder="Email"
-          keyboardType="email-address"
-          style={[styles.textinput, styles.shadow]}
-          onChangeText={val => emailChange(val)}
-        />
-        {data.isValidEmail ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Do not leave blank.</Text>
-          </Animatable.View>
-        )}
+          <View style={{alignItems: 'center'}}>
+            <TextInput
+              placeholder="Email"
+              keyboardType="email-address"
+              style={[styles.textinput, styles.shadow]}
+              onChangeText={val => emailChange(val)}
+            />
+            {data.isValidEmail ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>Do not leave blank.</Text>
+              </Animatable.View>
+            )}
 
-        <TextInput
-          placeholder="First Name"
-          style={[styles.textinput, styles.shadow]}
-          onChangeText={val => firstnameChange(val)}
-        />
-        {data.isValidFname ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Do not leave blank.</Text>
-          </Animatable.View>
-        )}
+            <TextInput
+              placeholder="First Name"
+              style={[styles.textinput, styles.shadow]}
+              onChangeText={val => firstnameChange(val)}
+            />
+            {data.isValidFname ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>Do not leave blank.</Text>
+              </Animatable.View>
+            )}
 
-        <TextInput
-          placeholder="Last Name"
-          style={[styles.textinput, styles.shadow]}
-          onChangeText={val => lastnameChange(val)}
-        />
-        {data.isValidLname ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Do not leave blank.</Text>
-          </Animatable.View>
-        )}
+            <TextInput
+              placeholder="Last Name"
+              style={[styles.textinput, styles.shadow]}
+              onChangeText={val => lastnameChange(val)}
+            />
+            {data.isValidLname ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>Do not leave blank.</Text>
+              </Animatable.View>
+            )}
 
-        <TextInput
-          placeholder="Id card"
-          keyboardType="number-pad"
-          maxLength={13}
-          style={[styles.textinput, styles.shadow]}
-          onChangeText={val => idChange(val)}
-        />
-        {data.isValidIdcard ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>
-              Id must be 13 characters long.
-            </Text>
-          </Animatable.View>
-        )}
+            <TextInput
+              placeholder="Id card"
+              keyboardType="number-pad"
+              maxLength={13}
+              style={[styles.textinput, styles.shadow]}
+              onChangeText={val => idChange(val)}
+            />
+            {data.isValidIdcard ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>
+                  Id must be 13 characters long.
+                </Text>
+              </Animatable.View>
+            )}
 
-        <TextInput
-          placeholder="Birthday"
-          style={[styles.textinput, styles.shadow]}
-          onChangeText={val => birthdayChange(val)}
-        />
-        {data.isValidBirthday ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Do not leave blank.</Text>
-          </Animatable.View>
-        )}
+            <TextInput
+              placeholder="Birthday"
+              style={[styles.textinput, styles.shadow]}
+              onChangeText={val => birthdayChange(val)}
+            />
+            {data.isValidBirthday ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>Do not leave blank.</Text>
+              </Animatable.View>
+            )}
 
-        <TextInput
-          placeholder="Phone Number"
-          keyboardType="phone-pad"
-          maxLength={10}
-          style={[styles.textinput, styles.shadow]}
-          onChangeText={val => phoneChange(val)}
-        />
-        {data.isValidPhone ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>
-              Phone must be 10 characters long.
-            </Text>
-          </Animatable.View>
-        )}
+            <TextInput
+              placeholder="Phone Number"
+              keyboardType="phone-pad"
+              maxLength={10}
+              style={[styles.textinput, styles.shadow]}
+              onChangeText={val => phoneChange(val)}
+            />
+            {data.isValidPhone ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>
+                  Phone must be 10 characters long.
+                </Text>
+              </Animatable.View>
+            )}
 
-        <TextInput
-          placeholder="Blood"
-          style={[styles.textinput, styles.shadow]}
-          onChangeText={val => bloodChange(val)}
-        />
-        {data.isValidBlood ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Do not leave blank.</Text>
-          </Animatable.View>
-        )}
-        <TextInput
-          placeholder="Province"
-          style={[styles.textinput, styles.shadow]}
-          onChangeText={val => provinceChange(val)}
-        />
-        {data.isValidProvince ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Do not leave blank.</Text>
-          </Animatable.View>
-        )}
-        <TextInput
-          placeholder="Address"
-          multiline
-          numberOfLines={2}
-          style={[styles.textarea, styles.shadow]}
-          onChangeText={val => adressChange(val)}
-        />
-        {data.isValidAddress ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Do not leave blank.</Text>
-          </Animatable.View>
-        )}
-        <TextInput
-          placeholder="History"
-          multiline
-          numberOfLines={4}
-          style={[styles.textarea, styles.shadow]}
-          onChangeText={val => historyChange(val)}
-        />
-        {data.isValidHistory ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Do not leave blank.</Text>
-          </Animatable.View>
-        )}
+            <TextInput
+              placeholder="Blood"
+              style={[styles.textinput, styles.shadow]}
+              onChangeText={val => bloodChange(val)}
+            />
+            {data.isValidBlood ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>Do not leave blank.</Text>
+              </Animatable.View>
+            )}
+            <TextInput
+              placeholder="Province"
+              style={[styles.textinput, styles.shadow]}
+              onChangeText={val => provinceChange(val)}
+            />
+            {data.isValidProvince ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>Do not leave blank.</Text>
+              </Animatable.View>
+            )}
+            <TextInput
+              placeholder="Address"
+              multiline
+              numberOfLines={2}
+              style={[styles.textarea, styles.shadow]}
+              onChangeText={val => adressChange(val)}
+            />
+            {data.isValidAddress ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>Do not leave blank.</Text>
+              </Animatable.View>
+            )}
+            <TextInput
+              placeholder="History"
+              multiline
+              numberOfLines={4}
+              style={[styles.textarea, styles.shadow]}
+              onChangeText={val => historyChange(val)}
+            />
+            {data.isValidHistory ? null : (
+              <Animatable.View animation="fadeInLeft" duration={500}>
+                <Text style={styles.errorMsg}>Do not leave blank.</Text>
+              </Animatable.View>
+            )}
 
-        <View
-          style={{flexDirection: 'row', padding: 20, alignItems: 'center'}}>
-         
-          <Text style={globeStyles.fontWhite}>
-            I Agree with privacy and policy
-          </Text>
+            <View
+              style={{flexDirection: 'row', padding: 20, alignItems: 'center'}}>
+             
+              <Text style={globeStyles.fontWhite}>
+                I Agree with privacy and policy
+              </Text>
+            </View>
+            
+          </View>
+          </ScrollView>
+          <TouchableOpacity
+              style={[
+                {
+                  width: 125,
+                  height: 50,
+                  backgroundColor: '#287094',
+                  borderRadius: 50,
+                  marginStart: 25,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                },
+                styles.shadow,
+              ]}
+              onPress={() => {
+                registerHandle(
+                  data.fristname,
+                  data.lastname,
+                  data.birthday,
+                  data.phone,
+                  data.idcard,
+                  data.address,
+                  data.province,
+                  data.blood,
+                  data.history,
+                  data.email,
+                );
+              }}>
+              <Text style={[globeStyles.fontWhite, {fontSize: 20}]}>
+                Sign up
+              </Text>
+            </TouchableOpacity>
+            <Text style={{height: 40}} />
         </View>
-        
-      </View>
-      </ScrollView>
-      <TouchableOpacity
-          style={[
-            {
-              width: 125,
-              height: 50,
-              backgroundColor: '#287094',
-              borderRadius: 50,
-              marginStart: 25,
-              alignItems: 'center',
-              justifyContent: 'center',
-            },
-            styles.shadow,
-          ]}
-          onPress={() => {
-            registerHandle(
-              data.fristname,
-              data.lastname,
-              data.birthday,
-              data.phone,
-              data.idcard,
-              data.address,
-              data.province,
-              data.blood,
-              data.history,
-              data.email,
-            );
-          }}>
-          <Text style={[globeStyles.fontWhite, {fontSize: 20}]}>
-            Sign up
-          </Text>
-        </TouchableOpacity>
-        <Text style={{height: 40}} />
- 
-      </ImageBackground>
-    </ScrollView>
+     
+
+    </ImageBackground>
   );
 };
 const styles = StyleSheet.create({
