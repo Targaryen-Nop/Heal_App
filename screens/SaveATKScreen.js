@@ -16,6 +16,8 @@ import {th} from 'date-fns/locale';
 import {format} from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import ImagePicker from 'react-native-image-crop-picker';
+
 import {globeStyles} from '../styles/globle';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,10 +26,7 @@ const SaveATKScreen = ({navigation}) => {
   const [image, setImage] = React.useState();
   const openCamera = async() => {
     if(Platform.OS === "ios"){
-      await launchCamera()
-
-    }else if(Platform.OS === "android"){
-      launchCamera({}, async response => {
+      launchCamera({includeBase64}, async response => {
         if (response.didCancel) {
           console.log('User cancelled image picker');
         } else if (response.error) {
@@ -35,7 +34,22 @@ const SaveATKScreen = ({navigation}) => {
         } else if (response.customButton) {
           console.log('User tapped custom button: ', response.customButton);
         } else {
-          const source = {uri: response.assets[0].uri};
+          const source = {uri: response.assets[0].base64};
+          await setImage(source.uri);
+          // You can also display the image using data:
+          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+        }
+      })
+    }else if(Platform.OS === "android"){
+      launchCamera({includeBase64}, async response => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          const source = {uri: response.assets[0].base64};
           await setImage(source.uri);
           // You can also display the image using data:
           // const source = { uri: 'data:image/jpeg;base64,' + response.data };
@@ -44,7 +58,7 @@ const SaveATKScreen = ({navigation}) => {
     }
   };
   return (
-    <ScrollView>
+    <View style={{flex:1}}>
       <ImageBackground
         source={require('../assets/background_gray.jpg')}
         style={{flex: 1,...Platform.select({
@@ -124,17 +138,28 @@ const SaveATKScreen = ({navigation}) => {
                   }}
                 />
               </ImageBackground>
+              <View>
+                  <TouchableOpacity>
+                    <Text>ติดเชื้อ</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Text>ไม่ติดเชื้อ</Text>
+                  </TouchableOpacity>
+              </View>
+              <View style={{flexDirection:'row'}}> 
               <TouchableOpacity style={styles.open_button} onPress={openCamera}>
                 <Text style={[globeStyles.fontWhite]}>เปิดกล้อง</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.open_button}>
                 <Text style={[globeStyles.fontWhite]}>Upload</Text>
               </TouchableOpacity>
+              </View>
+              
             </View>
           </View>
         </View>
       </ImageBackground>
-    </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
