@@ -27,18 +27,18 @@ import RegisterScreen from './RegisterScreen';
 import NewsSreen from './NewsSreen';
 import SignInScreen from './SignUpScreen';
 import SignUpScreen from './SignUpScreen';
-
+import DetailMenucheck from './DetailMenucheck';
 
 const HomeStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const NewsStack = createStackNavigator();
+const MenuStack = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
 
 const MainTabScreen = () => (
   <Tab.Navigator initialRouteName="Home" activeColor="#fff">
-   
     <Tab.Screen
       name="Notifications"
       component={NewsStackStackScreen}
@@ -64,7 +64,7 @@ const MainTabScreen = () => (
 
     <Tab.Screen
       name="ATKReport"
-      component={MenuCheckATKScreen}
+      component={MenuCheckStackScreen}
       options={{
         tabBarLabel: 'ประวัติATK',
         tabBarColor: '#023246',
@@ -174,10 +174,7 @@ const ProfileStackScreen = ({navigation}) => {
       screenOptions={{
         headerShown: false,
       }}>
-      <ProfileStack.Screen
-        name="Profile"
-        component={ProfileScreen}
-      />
+      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
       <ProfileStack.Screen
         name="EditProfile"
         options={{
@@ -197,24 +194,31 @@ const ProfileStackScreen = ({navigation}) => {
         options={{
           title: 'Check ATK',
         }}
-        component={MenuCheckATKScreen}
+        component={MenuCheckStackScreen}
       />
     </ProfileStack.Navigator>
   );
 };
 
+const MenuCheckStackScreen = () => {
+  return (
+    <MenuStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <MenuStack.Screen name="MenuCheck" component={MenuCheckATKScreen} />
+      <MenuStack.Screen name="Detail" component={DetailMenucheck} />
+    </MenuStack.Navigator>
+  );
+};
 
 const NewsStackStackScreen = ({navigation}) => {
-  
   return (
     <NewsStack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      <NewsStack.Screen
-        name="News"
-        component={NewsSreen}
-      />
+      <NewsStack.Screen name="News" component={NewsSreen} />
     </NewsStack.Navigator>
   );
 };

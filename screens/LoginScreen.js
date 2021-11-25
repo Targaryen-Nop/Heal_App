@@ -132,7 +132,7 @@ const LoginScreen = ({navigation}) => {
               Login to your Account
             </Text>
             <TextInput
-              placeholder="username"
+              placeholder="Id Card"
               style={[styles.textinput, styles.shadow]}
               placeholderTextColor="#666666"
               autoCapitalize="none"
@@ -148,7 +148,7 @@ const LoginScreen = ({navigation}) => {
               </Animatable.View>
             )}
             <TextInput
-              placeholder="username"
+              placeholder="Phone Number"
               style={[styles.textinput, styles.shadow]}
               placeholderTextColor="#666666"
               secureTextEntry={data.secureTextEntry ? true : false}
