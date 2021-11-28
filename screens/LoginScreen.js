@@ -26,7 +26,7 @@ const LoginScreen = ({navigation}) => {
     username: '',
     password: '',
     check_textInputChange: false,
-    secureTextEntry: true,
+    secureTextEntry: false,
     isValidUser: true,
     isValidPassword: true,
   });
@@ -120,15 +120,14 @@ const LoginScreen = ({navigation}) => {
         source={require('../assets/background.jpg')}
         resizeMode="cover"
         style={styles.image}>
-        <View style={{alignItems: 'center', marginTop: 50}}>
+        <View style={{alignItems: 'center', marginTop: 75}}>
           <Image
             source={require('../assets/logo.png')}
             style={styles.logo}
             resizeMode="contain"
           />
           <View style={{marginTop: 75}}>
-            <Text style={[globeStyles.fontWhite, {fontSize: 20}]}>
-              {' '}
+            <Text style={[globeStyles.fontWhite, {fontSize: 20,alignSelf:'center'}]}>
               Login to your Account
             </Text>
             <TextInput
@@ -151,18 +150,11 @@ const LoginScreen = ({navigation}) => {
               placeholder="Phone Number"
               style={[styles.textinput, styles.shadow]}
               placeholderTextColor="#666666"
-              secureTextEntry={data.secureTextEntry ? true : false}
+              secureTextEntry={true}
               autoCapitalize="none"
               onChangeText={val => handlePasswordChange(val)}
             />
 
-            <TouchableOpacity onPress={updateSecureTextEntry}>
-              {data.secureTextEntry ? (
-                <Feather name="eye-off" color="grey" size={20} />
-              ) : (
-                <Feather name="eye" color="grey" size={20} />
-              )}
-            </TouchableOpacity>
 
             {data.isValidPassword ? null : (
               <Animatable.View animation="fadeInLeft" duration={500}>
@@ -175,7 +167,7 @@ const LoginScreen = ({navigation}) => {
             <View
               style={{flexDirection: 'row', padding: 20, alignItems: 'center'}}>
              
-              <Text style={globeStyles.fontWhite}>Remember me</Text>
+              
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
               <TouchableOpacity

@@ -20,8 +20,6 @@ import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 
 const RegisterScreen = ({navigation}) => {
-  const [isSelected, setSelection] = React.useState(false);
-
   const [data, setData] = React.useState({
     fristname: '',
     lastname: '',
@@ -224,7 +222,6 @@ const RegisterScreen = ({navigation}) => {
     });
     // console.log(data);
     // console.log(resp.data);
-   
     if (data.isValidPhone == false || data.isValidIdcard == false) {
       Alert.alert('Wrong !!!', 'Phone or IDcard field cannot be empty.', [
         {text: 'Okay'},
@@ -241,29 +238,53 @@ const RegisterScreen = ({navigation}) => {
       Alert.alert('No Data', 'Please Enter your Data.', [{text: 'Okay'}]);
       return;
     }
-   
+  };
+
+  const onReset = () => {
+    setData({
+      fristname: '',
+      lastname: '',
+      birthday: '',
+      phone: '',
+      idcard: '',
+      address: '',
+      province: '',
+      blood: '',
+      history: '',
+      email: '',
+      isValidAddress:true,
+      isValidBirthday:true,
+      isValidBlood:true,
+      isValidEmail:true,
+      isValidFname:true,
+      isValidHistory:true,
+      isValidIdcard:true,
+      isValidLname:true,
+      isValidPhone:true,
+      isValidProvince:true,
+    });
+    
   };
 
   return (
     <ImageBackground
-        source={require('../assets/background.jpg')}
-        resizeMode="cover"
-        style={styles.image}>
-   
-        <View style={{alignItems: 'center', marginTop: 50}}>
-          <Image
-            source={require('../assets/logo.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-           <ScrollView >
-      
+      source={require('../assets/background.jpg')}
+      resizeMode="cover"
+      style={styles.image}>
+      <View style={{alignItems: 'center', marginTop: 50}}>
+        <Image
+          source={require('../assets/logo.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+        <ScrollView>
           <View style={{alignItems: 'center'}}>
             <TextInput
-              placeholder="Email"
+              placeholder="กรุณาใส่อีเมล"
               keyboardType="email-address"
               style={[styles.textinput, styles.shadow]}
               onChangeText={val => emailChange(val)}
+              value={data.email}
             />
             {data.isValidEmail ? null : (
               <Animatable.View animation="fadeInLeft" duration={500}>
@@ -272,9 +293,10 @@ const RegisterScreen = ({navigation}) => {
             )}
 
             <TextInput
-              placeholder="First Name"
+              placeholder="กรุณาใส่ชื่อ"
               style={[styles.textinput, styles.shadow]}
               onChangeText={val => firstnameChange(val)}
+              value={data.fristname}
             />
             {data.isValidFname ? null : (
               <Animatable.View animation="fadeInLeft" duration={500}>
@@ -283,9 +305,10 @@ const RegisterScreen = ({navigation}) => {
             )}
 
             <TextInput
-              placeholder="Last Name"
+              placeholder="กรุณาใส่นามสกุล"
               style={[styles.textinput, styles.shadow]}
               onChangeText={val => lastnameChange(val)}
+              value={data.lastname}
             />
             {data.isValidLname ? null : (
               <Animatable.View animation="fadeInLeft" duration={500}>
@@ -294,11 +317,12 @@ const RegisterScreen = ({navigation}) => {
             )}
 
             <TextInput
-              placeholder="Id card"
+              placeholder="กรุณาใส่เลขบัตรประชาชน"
               keyboardType="number-pad"
               maxLength={13}
               style={[styles.textinput, styles.shadow]}
               onChangeText={val => idChange(val)}
+              value={data.idcard}
             />
             {data.isValidIdcard ? null : (
               <Animatable.View animation="fadeInLeft" duration={500}>
@@ -309,9 +333,10 @@ const RegisterScreen = ({navigation}) => {
             )}
 
             <TextInput
-              placeholder="Birthday"
+              placeholder="กรุณาใส่วันเดือนปีเกิด"
               style={[styles.textinput, styles.shadow]}
               onChangeText={val => birthdayChange(val)}
+              value={data.birthday}
             />
             {data.isValidBirthday ? null : (
               <Animatable.View animation="fadeInLeft" duration={500}>
@@ -320,11 +345,12 @@ const RegisterScreen = ({navigation}) => {
             )}
 
             <TextInput
-              placeholder="Phone Number"
+              placeholder="กรุณาใส่หมายเลขโทรศัพท์"
               keyboardType="phone-pad"
               maxLength={10}
               style={[styles.textinput, styles.shadow]}
               onChangeText={val => phoneChange(val)}
+              value={data.phone}
             />
             {data.isValidPhone ? null : (
               <Animatable.View animation="fadeInLeft" duration={500}>
@@ -335,9 +361,10 @@ const RegisterScreen = ({navigation}) => {
             )}
 
             <TextInput
-              placeholder="Blood"
+              placeholder="กรุณาใส่กรุ๊ปเลือด"
               style={[styles.textinput, styles.shadow]}
               onChangeText={val => bloodChange(val)}
+              value={data.blood}
             />
             {data.isValidBlood ? null : (
               <Animatable.View animation="fadeInLeft" duration={500}>
@@ -345,9 +372,10 @@ const RegisterScreen = ({navigation}) => {
               </Animatable.View>
             )}
             <TextInput
-              placeholder="Province"
+              placeholder="กรุณาใส่จังหวัดที่อยู่"
               style={[styles.textinput, styles.shadow]}
               onChangeText={val => provinceChange(val)}
+              value={data.province}
             />
             {data.isValidProvince ? null : (
               <Animatable.View animation="fadeInLeft" duration={500}>
@@ -355,11 +383,12 @@ const RegisterScreen = ({navigation}) => {
               </Animatable.View>
             )}
             <TextInput
-              placeholder="Address"
+              placeholder="กรุณาใส่ที่อยู่"
               multiline
               numberOfLines={2}
               style={[styles.textarea, styles.shadow]}
               onChangeText={val => adressChange(val)}
+              value={data.address}
             />
             {data.isValidAddress ? null : (
               <Animatable.View animation="fadeInLeft" duration={500}>
@@ -367,63 +396,79 @@ const RegisterScreen = ({navigation}) => {
               </Animatable.View>
             )}
             <TextInput
-              placeholder="History"
+              placeholder="กรุณาใส่ประวัติ"
               multiline
               numberOfLines={4}
               style={[styles.textarea, styles.shadow]}
               onChangeText={val => historyChange(val)}
+              value={data.history}
             />
             {data.isValidHistory ? null : (
               <Animatable.View animation="fadeInLeft" duration={500}>
                 <Text style={styles.errorMsg}>Do not leave blank.</Text>
               </Animatable.View>
             )}
-
             <View
-              style={{flexDirection: 'row', padding: 20, alignItems: 'center'}}>
-             
-              <Text style={globeStyles.fontWhite}>
-                I Agree with privacy and policy
-              </Text>
-            </View>
-            
-          </View>
-          </ScrollView>
-          <TouchableOpacity
-              style={[
-                {
-                  width: 125,
-                  height: 50,
-                  backgroundColor: '#287094',
-                  borderRadius: 50,
-                  marginStart: 25,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                },
-                styles.shadow,
-              ]}
-              onPress={() => {
-                registerHandle(
-                  data.fristname,
-                  data.lastname,
-                  data.birthday,
-                  data.phone,
-                  data.idcard,
-                  data.address,
-                  data.province,
-                  data.blood,
-                  data.history,
-                  data.email,
-                );
+              style={{
+                marginTop: 20,
+                marginEnd: 20,
               }}>
-              <Text style={[globeStyles.fontWhite, {fontSize: 20}]}>
-                Sign up
-              </Text>
-            </TouchableOpacity>
-            <Text style={{height: 40}} />
-        </View>
-     
-
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  style={[
+                    {
+                      width: 125,
+                      height: 50,
+                      backgroundColor: '#287094',
+                      borderRadius: 50,
+                      marginStart: 25,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginEnd: 10,
+                    },
+                    styles.shadow,
+                  ]}
+                  onPress={() => {
+                    registerHandle(
+                      data.fristname,
+                      data.lastname,
+                      data.birthday,
+                      data.phone,
+                      data.idcard,
+                      data.address,
+                      data.province,
+                      data.blood,
+                      data.history,
+                      data.email,
+                    );
+                  }}>
+                  <Text style={[globeStyles.fontWhite, {fontSize: 20}]}>
+                    Sign up
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    {
+                      width: 125,
+                      height: 50,
+                      backgroundColor: '#fff',
+                      borderRadius: 50,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    },
+                    styles.shadow,
+                  ]}
+                  onPress={() => {
+                    onReset();
+                  }}>
+                  <Text style={[globeStyles.font, {fontSize: 20}]}>Reset</Text>
+                </TouchableOpacity>
+              </View>
+              <Text style={{height: 200}} />
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     </ImageBackground>
   );
 };

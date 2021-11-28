@@ -26,7 +26,7 @@ const HomeScreen = ({navigation}) => {
     resizeMode="cover">
     <ScrollView style={styles.container}>
      
-        <View style={{paddingHorizontal: 20, paddingTop: 20}}>
+        <View style={{paddingHorizontal: 20,}}>
           <Image
             source={require('../assets/logo.png')}
             style={{
@@ -36,21 +36,21 @@ const HomeScreen = ({navigation}) => {
               alignSelf: 'center',
             }}
           />
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row',justifyContent:'space-between'}}>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
               <Avatar.Image
                 source={{
                   uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
                 }}
-                size={75}
+                size={50}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={{marginLeft: 200}}>
+            {/* <TouchableOpacity style={{marginLeft: 200}}>
               <Image
                 source={require('../assets/message.png')}
                 style={{width: 50, height: 50}}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity>
               <Image
                 source={require('../assets/bell.png')}
@@ -59,12 +59,10 @@ const HomeScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View>
-              <Text style={[{fontSize: 25}, globeStyles.fontBold]}>
-                MY TODAY
-              </Text>
+            <View >
+    
               <Text style={[globeStyles.font, {fontSize: 20}]}>
-                {format(new Date(), 'dd MMMM yyyy', {locale: th})}
+                MY TODAY {format(new Date(), 'dd MMMM yyyy', {locale: th})}
               </Text>
             </View>
           </View>

@@ -9,6 +9,7 @@ import {
   TextInput,
   ImageBackground,
   Platform,
+  Switch,
 } from 'react-native';
 
 import {Avatar} from 'react-native-paper';
@@ -17,7 +18,7 @@ import {format} from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ImagePicker from 'react-native-image-crop-picker';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import {globeStyles} from '../styles/globle';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -25,6 +26,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const SaveATKScreen = ({navigation}) => {
   const [image, setImage] = React.useState();
   const [profile, setProfile] = React.useState({});
+  const [isEnabled, setIsEnabled] = React.useState(false);
+
+  const onChange = (val)=>{
+    setIsEnabled(!val)
+  }
 
   const getProfile = async () => {
     const idcard = await AsyncStorage.getItem('userIdcard');
@@ -112,6 +118,7 @@ const SaveATKScreen = ({navigation}) => {
               <Image
                 source={require('../assets/setting.png')}
                 style={{width: 50, height: 50}}
+
               />
             </TouchableOpacity>
           </View>
@@ -169,22 +176,61 @@ const SaveATKScreen = ({navigation}) => {
                   }}
                 />
               </ImageBackground>
-              <View>
-                <TouchableOpacity>
-                  <Text>ติดเชื้อ</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Text>ไม่ติดเชื้อ</Text>
-                </TouchableOpacity>
-              </View>
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity
-                  style={styles.open_button}
-                  onPress={openCamera}>
-                  <Text style={[globeStyles.fontWhite]}>เปิดกล้อง</Text>
+                  style={[
+                    {
+                    
+                      borderTopStartRadius:25,
+                      borderBottomStartRadius:25
+                    },
+                    styles.button,isEnabled ? {backgroundColor: '#FF0000'} : { backgroundColor: '#FF8888',}
+                  ]}
+                  onPress={()=>{onChange(isEnabled)}}>
+                  <Text style={globeStyles.fontWhite}>ติดเชื้อ</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.open_button}>
-                  <Text style={[globeStyles.fontWhite]}>Upload</Text>
+                <TouchableOpacity
+                  style={[
+                    {
+
+                      borderTopEndRadius:25,
+                      borderBottomEndRadius:25
+                    },
+                    styles.button,isEnabled ? {backgroundColor: '#86FF99'} : {backgroundColor: '#048200'}
+                  ]}
+                  onPress={()=>{onChange(isEnabled)}}>
+                  <Text style={globeStyles.fontWhite}>ไม่ติดเชื้อ</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{flexDirection: 'row',marginTop:10}}>
+                <TouchableOpacity
+                  style={[
+                    {
+                      width: 125,
+                      height: 50,
+                      backgroundColor: '#fff',
+                      borderRadius: 50,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    },
+                    styles.shadow,
+                  ]}
+                  onPress={openCamera}>
+                  <Text style={[globeStyles.font]}>เปิดกล้อง</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[
+                  {
+                    width: 125,
+                    height: 50,
+                    backgroundColor: '#287094',
+                    borderRadius: 50,
+                    marginStart: 5,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+          
+                  },
+                  styles.shadow,]}>
+                  <Text style={[globeStyles.fontWhite]}>บันทึก</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -219,13 +265,30 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   open_button: {
-    margin: 10,
+    margin: 5,
     width: 100,
     height: 50,
     backgroundColor: '#287094',
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    width: 100,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+
+    elevation: 24,
   },
 });
 
