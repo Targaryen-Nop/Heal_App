@@ -208,6 +208,7 @@ const MenuCheckStackScreen = () => {
       }}>
       <MenuStack.Screen name="MenuCheck" component={MenuCheckATKScreen} />
       <MenuStack.Screen name="Detail" component={DetailMenucheck} />
+      <MenuStack.Screen name="SaveATK" component={SaveATKScreen} />
     </MenuStack.Navigator>
   );
 };

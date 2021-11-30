@@ -6,7 +6,8 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  ImageBackground,Platform
+  ImageBackground,
+  Platform,
 } from 'react-native';
 
 import {Avatar} from 'react-native-paper';
@@ -20,13 +21,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const ProfileScreen = ({navigation}) => {
   return (
     <ImageBackground
-    source={require('../assets/background_gray.jpg')}
-    style={{flex: 1,...Platform.select({
-      ios:{paddingTop:30}
-    })}}
-    resizeMode="cover">
-    <ScrollView>
-     
+      source={require('../assets/background_gray.jpg')}
+      style={{
+        flex: 1,
+        ...Platform.select({
+          ios: {paddingTop: 30},
+        }),
+      }}
+      resizeMode="cover">
+      <ScrollView>
         <View style={{paddingHorizontal: 20, paddingTop: 20}}>
           <View
             style={{
@@ -44,29 +47,31 @@ const ProfileScreen = ({navigation}) => {
               />
             </TouchableOpacity>
             <Text style={[styles.text, globeStyles.fontBold]}>MY PROFILE</Text>
-            <TouchableOpacity>
-              <Image
-                source={require('../assets/setting.png')}
-                style={{width: 50, height: 50}}
-              />
-            </TouchableOpacity>
+            {/* <TouchableOpacity> */}
+            <Image
+              // source={require('../assets/setting.png')}
+              style={{width: 50, height: 50}}
+            />
+            {/* </TouchableOpacity> */}
           </View>
-          <Avatar.Image
-            source={{
-              uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
-            }}
-            size={75}
-          />
+
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View>
-              <Text style={[styles.text, globeStyles.fontBold]}>MY TODAY</Text>
+            <View style={{alignItems:'center'}}>
+              <Avatar.Image
+                source={{
+                  uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
+                }}
+                size={50}
+              />
               <Text style={[globeStyles.font, {fontSize: 15}]}>
                 {format(new Date(), 'dd MMMM yyyy', {locale: th})}
               </Text>
             </View>
             <TouchableOpacity
-             onPress={()=>{navigation.navigate('SaveATK')}}
-            >
+              style={{marginTop: 25}}
+              onPress={() => {
+                navigation.navigate('SaveATK');
+              }}>
               <Image
                 source={require('../assets/scan.png')}
                 style={{width: 200, height: 50}}
@@ -192,8 +197,7 @@ const ProfileScreen = ({navigation}) => {
             <View style={styles.borderBot} />
           </View>
         </View>
-     
-    </ScrollView>
+      </ScrollView>
     </ImageBackground>
   );
 };

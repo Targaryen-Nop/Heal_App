@@ -25,16 +25,19 @@ const MenuCheckATKScreen = ({navigation}) => {
       day: '16/12/2564',
       name: 'Nop',
       lorem: 'dwadddddddddddddddsadasdasd',
+      number:0
     },
     {
       day: '17/12/2564',
       name: 'Nop',
       lorem: 'dwadddddddddddddddsadasdasd',
+      number:1
     },
     {
       day: '18/12/2564',
       name: 'Nop',
       lorem: 'dwadddddddddddddddsadasdasd',
+      number:2
     },
     {
       day: '19/12/2564',
@@ -71,27 +74,28 @@ const MenuCheckATKScreen = ({navigation}) => {
               />
             </TouchableOpacity>
             <Text style={[styles.text, globeStyles.fontBold]}>MY PROFILE</Text>
-            <TouchableOpacity>
-              <Image
-                source={require('../assets/setting.png')}
-                style={{width: 50, height: 50}}
-              />
-            </TouchableOpacity>
+            {/* <TouchableOpacity> */}
+            <Image
+              // source={require('../assets/setting.png')}
+              style={{width: 50, height: 50}}
+            />
+            {/* </TouchableOpacity> */}
           </View>
-          <Avatar.Image
-            source={{
-              uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
-            }}
-            size={75}
-          />
+
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View>
-              <Text style={[styles.text, globeStyles.fontBold]}>MY TODAY</Text>
+            <View style={{alignItems:'center'}}>
+              <Avatar.Image
+                source={{
+                  uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
+                }}
+                size={50}
+              />
               <Text style={[globeStyles.font, {fontSize: 15}]}>
                 {format(new Date(), 'dd MMMM yyyy', {locale: th})}
               </Text>
             </View>
             <TouchableOpacity
+              style={{marginTop: 25}}
               onPress={() => {
                 navigation.navigate('SaveATK');
               }}>
