@@ -7,11 +7,11 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
-  Platform
+  Platform,
 } from 'react-native';
 
 import {Avatar} from 'react-native-paper';
-import {th} from 'date-fns/locale';
+import {gl, th} from 'date-fns/locale';
 import {format} from 'date-fns';
 
 import {globeStyles} from '../styles/globle';
@@ -21,41 +21,41 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import axios from 'axios';
 
-
 import {AuthContext} from '../components/context';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-const NewsSreen =  ({navigation}) => {
- 
+const NewsSreen = ({navigation}) => {
 
-  const [profile,setProfile] = React.useState({});
- 
-  const getProfile = async () =>{
-    const name = await AsyncStorage.getItem('userName')
-    const lname = await AsyncStorage.getItem('userLname')
-    const phone = await AsyncStorage.getItem('userPhone')
-    const idcard = await AsyncStorage.getItem('userIdcard')
+
+  const [profile, setProfile] = React.useState({});
+
+  const getProfile = async () => {
+    const name = await AsyncStorage.getItem('userName');
+    const lname = await AsyncStorage.getItem('userLname');
+    const phone = await AsyncStorage.getItem('userPhone');
+    const idcard = await AsyncStorage.getItem('userIdcard');
     setProfile({
-      name:name,
-      lname:lname,
-      phone:phone,
-      idcard:idcard,
-    })
-  }
-React.useEffect(()=>{
-  getProfile()
-  
-},[])
+      name: name,
+      lname: lname,
+      phone: phone,
+      idcard: idcard,
+    });
+  };
+  React.useEffect(() => {
+    getProfile();
+  }, []);
   return (
     <ImageBackground
-        source={require('../assets/background_gray.jpg')}
-        style={{flex: 1,...Platform.select({
-          ios:{paddingTop:30}
-        })}}
-        resizeMode="cover">
-    <ScrollView>
-      
+      source={require('../assets/background_gray.jpg')}
+      style={{
+        flex: 1,
+        ...Platform.select({
+          ios: {paddingTop: 30},
+        }),
+      }}
+      resizeMode="cover">
+      <ScrollView>
         <View style={{paddingHorizontal: 20, paddingVertical: 20}}>
           <View
             style={{
@@ -63,16 +63,14 @@ React.useEffect(()=>{
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <TouchableOpacity
-              onPress={() => {             
-              }}>
+            <TouchableOpacity onPress={() => {}}>
               <Image
                 source={require('../assets/back.png')}
                 style={{width: 50, height: 50}}
               />
             </TouchableOpacity>
             <Text style={[styles.text, globeStyles.fontBold]}>ข่าวสาร</Text>
-         
+
             <TouchableOpacity>
               <Image
                 source={require('../assets/setting.png')}
@@ -85,15 +83,17 @@ React.useEffect(()=>{
         <View style={globeStyles.cardlayout}>
           <Text />
           <View style={[globeStyles.cardinside]}>
-         
-           <TouchableOpacity style={{backgroundColor:'#000',width:100,height:100}} onPress={()=>{console.log(profile.name)}}>
-              <Text>{profile.name}</Text>
-           </TouchableOpacity>
+            <TouchableOpacity
+              style={{backgroundColor: '#000', width: 100, height: 100}}
+              onPress={() => {
+                console.log(new Date())
+              }}>
+             
+            </TouchableOpacity>
           </View>
         </View>
-      
-    </ScrollView>
-     </ImageBackground>
+      </ScrollView>
+    </ImageBackground>
   );
 };
 

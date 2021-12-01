@@ -17,6 +17,8 @@ import {th} from 'date-fns/locale';
 import {format} from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import axios from 'axios';
+
 import ImagePicker from 'react-native-image-crop-picker';
 import AsyncStorage from '@react-native-community/async-storage';
 import {globeStyles} from '../styles/globle';
@@ -24,13 +26,13 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const SaveATKScreen = ({navigation}) => {
-  const [image, setImage] = React.useState();
+  const [image, setImage] = React.useState({});
   const [profile, setProfile] = React.useState({});
   const [isEnabled, setIsEnabled] = React.useState(false);
 
-  const onChange = (val)=>{
-    setIsEnabled(!val)
-  }
+  const onChange = val => {
+    setIsEnabled(!val);
+  };
 
   const getProfile = async () => {
     const idcard = await AsyncStorage.getItem('userIdcard');
@@ -60,7 +62,7 @@ const SaveATKScreen = ({navigation}) => {
         }
       });
     } else if (Platform.OS === 'android') {
-      launchCamera({}, async response => {
+      launchCamera({includeBase64: true}, async response => {
         if (response.didCancel) {
           console.log('User cancelled image picker');
         } else if (response.error) {
@@ -68,23 +70,28 @@ const SaveATKScreen = ({navigation}) => {
         } else if (response.customButton) {
           console.log('User tapped custom button: ', response.customButton);
         } else {
-          const source = {uri: response.assets[0].uri};
-          await setImage(source.uri);
+          const source = {
+            uri: response.assets[0].uri,
+            base64: 'data:image/jpeg;base64,' + response.assets[0].base64,
+          };
+          await setImage(source);
           // You can also display the image using data:
           // const source = { uri: 'data:image/jpeg;base64,' + response.data };
         }
       });
     }
+  };
 
-    const onUpload = async () => {
-      const urlUpload = 'http://pmtechapp.lnw.mn/heal_api/atk.php';
-      const resp = await axios.post(urlUpload, {
-        file_attachment: image,
-        customer_idcard: profile.idcard,
-        atk_result: '',
-      });
-      console.log(resp.data);
-    };
+  const onUpload = async (val) => {
+    const urlUpload = 'http://pmtechapp.lnw.mn/heal_api/atk.php';
+    const resp = await axios.post(urlUpload, {
+      file_attachment:"dwa",
+      customer_idcard: profile.idcard,
+    });
+    if(true){
+      setIsEnabled(!val)
+    }
+    
   };
   return (
     <View style={{flex: 1}}>
@@ -123,7 +130,7 @@ const SaveATKScreen = ({navigation}) => {
           </View>
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View style={{alignItems:'center'}}>
+            <View style={{alignItems: 'center'}}>
               <Avatar.Image
                 source={{
                   uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
@@ -154,58 +161,53 @@ const SaveATKScreen = ({navigation}) => {
               <Text style={[styles.text, globeStyles.fontBold]}>
                 บันทึกประวัติ ATK
               </Text>
-              <ImageBackground
-                source={{
-                  uri: image,
-                }}
+              <Image
+              
+                source={require('../assets/atk_negative11.jpg')}
                 style={{
                   height: 200,
                   width: 200,
                   alignItems: 'center',
                   justifyContent: 'center',
+                  resizeMode:'contain'
                 }}
-                imageStyle={{borderRadius: 15}}>
-                <Icon
-                  name="camera"
-                  size={100}
-                  color="#000"
-                  style={{
-                    opacity: 0.7,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderWidth: 1,
-                    borderColor: '#fff',
-                    borderRadius: 10,
-                  }}
-                />
-              </ImageBackground>
+                imageStyle={{borderRadius: 15}}
+              />
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity
                   style={[
                     {
-                    
-                      borderTopStartRadius:25,
-                      borderBottomStartRadius:25
+                      borderTopStartRadius: 25,
+                      borderBottomStartRadius: 25,
                     },
-                    styles.button,isEnabled ? {backgroundColor: '#FF0000'} : { backgroundColor: '#FF8888',}
+                    styles.button,
+                    isEnabled
+                      ? {backgroundColor: '#FF0000'}
+                      : {backgroundColor: '#FF8888'},
                   ]}
-                  onPress={()=>{onChange(isEnabled)}}>
+                  onPress={() => {
+                    onChange(isEnabled);
+                  }}>
                   <Text style={globeStyles.fontWhite}>ติดเชื้อ</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
                     {
-
-                      borderTopEndRadius:25,
-                      borderBottomEndRadius:25
+                      borderTopEndRadius: 25,
+                      borderBottomEndRadius: 25,
                     },
-                    styles.button,isEnabled ? {backgroundColor: '#86FF99'} : {backgroundColor: '#048200'}
+                    styles.button,
+                    isEnabled
+                      ? {backgroundColor: '#86FF99'}
+                      : {backgroundColor: '#048200'},
                   ]}
-                  onPress={()=>{onChange(isEnabled)}}>
+                  onPress={() => {
+                    onChange(isEnabled);
+                  }}>
                   <Text style={globeStyles.fontWhite}>ไม่ติดเชื้อ</Text>
                 </TouchableOpacity>
               </View>
-              <View style={{flexDirection: 'row',marginTop:10}}>
+              <View style={{flexDirection: 'row', marginTop: 25}}>
                 <TouchableOpacity
                   style={[
                     {
@@ -221,18 +223,20 @@ const SaveATKScreen = ({navigation}) => {
                   onPress={openCamera}>
                   <Text style={[globeStyles.font]}>เปิดกล้อง</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[
-                  {
-                    width: 125,
-                    height: 50,
-                    backgroundColor: '#287094',
-                    borderRadius: 50,
-                    marginStart: 5,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-          
-                  },
-                  styles.shadow,]}>
+                <TouchableOpacity
+                  style={[
+                    {
+                      width: 125,
+                      height: 50,
+                      backgroundColor: '#287094',
+                      borderRadius: 50,
+                      marginStart: 5,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    },
+                    styles.shadow,
+                  ]}
+                  onPress={()=>onUpload(isEnabled)}>
                   <Text style={[globeStyles.fontWhite]}>บันทึก</Text>
                 </TouchableOpacity>
               </View>
@@ -267,20 +271,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: '90%',
   },
-  open_button: {
-    margin: 5,
-    width: 100,
-    height: 50,
-    backgroundColor: '#287094',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   button: {
-    width: 100,
+    width: 125,
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop:25
   },
   shadow: {
     shadowColor: '#000',

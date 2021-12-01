@@ -29,6 +29,8 @@ import SignInScreen from './SignUpScreen';
 import SignUpScreen from './SignUpScreen';
 import DetailMenucheck from './DetailMenucheck';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 const HomeStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -37,55 +39,57 @@ const MenuStack = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
 
-const MainTabScreen = () => (
-  <Tab.Navigator initialRouteName="Home" activeColor="#fff">
-    <Tab.Screen
-      name="Notifications"
-      component={NewsStackStackScreen}
-      options={{
-        tabBarLabel: 'ข่าวสาร',
-        tabBarColor: '#023246',
-        tabBarIcon: ({color}) => (
-          <FontAwsome name="globe" color={color} size={26} />
-        ),
-      }}
-    />
-    <Tab.Screen
-      name="Home"
-      component={HomeStackScreen}
-      options={{
-        tabBarLabel: 'หน้าหลัก',
-        tabBarColor: '#023246',
-        tabBarIcon: ({color}) => (
-          <Icon name="ios-home" color={color} size={26} />
-        ),
-      }}
-    />
+const MainTabScreen = () => {
+  return (
+    <Tab.Navigator initialRouteName="Home" activeColor="#fff">
+      <Tab.Screen
+        name="Notifications"
+        component={NewsStackStackScreen}
+        options={{
+          tabBarLabel: 'ข่าวสาร',
+          tabBarColor: '#023246',
+          tabBarIcon: ({color}) => (
+            <FontAwsome name="globe" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Home"
+        component={HomeStackScreen}
+        options={{
+          tabBarLabel: 'หน้าหลัก',
+          tabBarColor: '#023246',
+          tabBarIcon: ({color}) => (
+            <Icon name="ios-home" color={color} size={26} />
+          ),
+        }}
+      />
 
-    <Tab.Screen
-      name="ATKReport"
-      component={MenuCheckStackScreen}
-      options={{
-        tabBarLabel: 'ประวัติATK',
-        tabBarColor: '#023246',
-        tabBarIcon: ({color}) => (
-          <MaterialCommunityIcons name="book" color={color} size={26} />
-        ),
-      }}
-    />
-    <Tab.Screen
-      name="Profile"
-      component={ProfileStackScreen}
-      options={{
-        tabBarLabel: 'PROFILE',
-        tabBarColor: '#023246',
-        tabBarIcon: ({color}) => (
-          <Icon name="ios-person" color={color} size={26} />
-        ),
-      }}
-    />
-  </Tab.Navigator>
-);
+      <Tab.Screen
+        name="ATKReport"
+        component={MenuCheckStackScreen}
+        options={{
+          tabBarLabel: 'ประวัติATK',
+          tabBarColor: '#023246',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="book" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileStackScreen}
+        options={{
+          tabBarLabel: 'PROFILE',
+          tabBarColor: '#023246',
+          tabBarIcon: ({color}) => (
+            <Icon name="ios-person" color={color} size={26} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 export default MainTabScreen;
 
@@ -200,13 +204,18 @@ const ProfileStackScreen = ({navigation}) => {
   );
 };
 
-const MenuCheckStackScreen = () => {
+const MenuCheckStackScreen = ({navigation}) => {
+ 
   return (
     <MenuStack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      <MenuStack.Screen name="MenuCheck" component={MenuCheckATKScreen} />
+      <MenuStack.Screen
+        name="MenuCheck"
+        component={MenuCheckATKScreen}
+        initialParams={{ad:'dawd'}}
+      />
       <MenuStack.Screen name="Detail" component={DetailMenucheck} />
       <MenuStack.Screen name="SaveATK" component={SaveATKScreen} />
     </MenuStack.Navigator>

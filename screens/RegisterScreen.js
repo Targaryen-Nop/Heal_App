@@ -333,7 +333,7 @@ const RegisterScreen = ({navigation}) => {
             )}
 
             <TextInput
-              placeholder="กรุณาใส่วันเดือนปีเกิด"
+              placeholder="กรุณาใส่วันเดือนปีเกิด เช่น 01-01-2564"
               style={[styles.textinput, styles.shadow]}
               onChangeText={val => birthdayChange(val)}
               value={data.birthday}
