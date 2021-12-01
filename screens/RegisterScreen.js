@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Platform,
 } from 'react-native';
 
 import {globeStyles} from '../styles/globle';
@@ -386,7 +387,9 @@ const RegisterScreen = ({navigation}) => {
               placeholder="กรุณาใส่ที่อยู่"
               multiline
               numberOfLines={2}
-              style={[styles.textarea, styles.shadow]}
+              style={[styles.textarea, styles.shadow,{...Platform.select({
+                ios:{height:75}
+              })}]}
               onChangeText={val => adressChange(val)}
               value={data.address}
             />
@@ -399,7 +402,9 @@ const RegisterScreen = ({navigation}) => {
               placeholder="กรุณาใส่ประวัติ"
               multiline
               numberOfLines={4}
-              style={[styles.textarea, styles.shadow]}
+              style={[styles.textarea, styles.shadow,{...Platform.select({
+                ios:{height:75}
+              })}]}
               onChangeText={val => historyChange(val)}
               value={data.history}
             />

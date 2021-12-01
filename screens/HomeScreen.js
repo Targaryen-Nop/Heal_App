@@ -21,7 +21,7 @@ const HomeScreen = ({navigation}) => {
     <ImageBackground
     source={require('../assets/background_gray.jpg')}
     style={[{flex: 1, ...Platform.select({
-      ios:{paddingTop:20}
+      ios:{paddingTop:50}
     })}]}
     resizeMode="cover">
     <ScrollView style={styles.container}>
@@ -200,7 +200,9 @@ const HomeScreen = ({navigation}) => {
                     style={styles.cardsmall}
                   />
                 </TouchableOpacity>
+                
               </ScrollView>
+              {Platform.OS === 'ios' ? <Text style={{height:100}} /> : ''}
             </View>
           </View>
         </View>
