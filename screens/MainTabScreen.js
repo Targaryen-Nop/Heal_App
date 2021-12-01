@@ -205,7 +205,6 @@ const ProfileStackScreen = ({navigation}) => {
 };
 
 const MenuCheckStackScreen = ({navigation}) => {
- 
   return (
     <MenuStack.Navigator
       screenOptions={{

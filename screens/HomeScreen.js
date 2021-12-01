@@ -202,7 +202,7 @@ const HomeScreen = ({navigation}) => {
                 </TouchableOpacity>
                 
               </ScrollView>
-              {Platform.OS === 'ios' ? <Text style={{height:100}} /> : ''}
+              {Platform.OS === 'ios' ? <View style={{height:100}} /> : <View />}
             </View>
           </View>
         </View>

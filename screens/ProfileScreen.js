@@ -55,7 +55,7 @@ const ProfileScreen = ({navigation}) => {
             {/* </TouchableOpacity> */}
           </View>
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
             <View style={{alignItems:'center'}}>
               <Avatar.Image
                 source={{
@@ -66,9 +66,10 @@ const ProfileScreen = ({navigation}) => {
               <Text style={[globeStyles.font, {fontSize: 15}]}>
                 {format(new Date(), 'dd MMMM yyyy', {locale: th})}
               </Text>
+              
             </View>
             <TouchableOpacity
-              style={{marginTop: 25}}
+              style={{marginTop: 5}}
               onPress={() => {
                 navigation.navigate('SaveATK');
               }}>

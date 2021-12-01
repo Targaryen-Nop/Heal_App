@@ -34,9 +34,11 @@ const MenuCheckATKScreen = ({route, navigation}) => {
     setDetailUser(resp.data);
   };
 
-  React.useEffect(async () => {
-    const idcard = await AsyncStorage.getItem('userIdcard');
-    getData(idcard);
+  React.useEffect(() => {
+    setTimeout(async()=>{
+      const idcard = await AsyncStorage.getItem('userIdcard');
+    await getData(idcard);
+    },1000)
   }, []);
 
   return (
@@ -87,7 +89,7 @@ const MenuCheckATKScreen = ({route, navigation}) => {
             </Text>
           </View>
           <TouchableOpacity
-            style={{marginTop: 25}}
+            style={{marginTop: 5}}
             onPress={() => {
               navigation.navigate('SaveATK');
             }}>
