@@ -17,7 +17,7 @@ import {globeStyles} from '../styles/globle';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const HomeScreen = ({navigation}) => {
-  const [profile, setProfile] = React.useState({})
+  const [profile, setProfile] = React.useState({});
 
   const getProfile = async () => {
     const photo = await AsyncStorage.getItem('userPhoto');
@@ -31,14 +31,18 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <ImageBackground
-    source={require('../assets/background_gray.jpg')}
-    style={[{flex: 1, ...Platform.select({
-      ios:{paddingTop:50}
-    })}]}
-    resizeMode="cover">
-    <ScrollView style={styles.container}>
-     
-        <View style={{paddingHorizontal: 20,}}>
+      source={require('../assets/background_gray.jpg')}
+      style={[
+        {
+          flex: 1,
+          ...Platform.select({
+            ios: {paddingTop: 50},
+          }),
+        },
+      ]}
+      resizeMode="cover">
+      <ScrollView style={styles.container}>
+        <View style={{paddingHorizontal: 20}}>
           <Image
             source={require('../assets/logo.png')}
             style={{
@@ -48,7 +52,7 @@ const HomeScreen = ({navigation}) => {
               alignSelf: 'center',
             }}
           />
-          <View style={{flexDirection: 'row',justifyContent:'space-between'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
               <Avatar.Image
                 source={{
@@ -71,8 +75,7 @@ const HomeScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View >
-    
+            <View>
               <Text style={[globeStyles.font, {fontSize: 20}]}>
                 MY TODAY {format(new Date(), 'dd MMMM yyyy', {locale: th})}
               </Text>
@@ -212,14 +215,16 @@ const HomeScreen = ({navigation}) => {
                     style={styles.cardsmall}
                   />
                 </TouchableOpacity>
-                
               </ScrollView>
-              {Platform.OS === 'ios' ? <View style={{height:100}} /> : <View />}
+              {Platform.OS === 'ios' ? (
+                <View style={{height: 100}} />
+              ) : (
+                <View />
+              )}
             </View>
           </View>
         </View>
-   
-    </ScrollView>
+      </ScrollView>
     </ImageBackground>
   );
 };
@@ -233,7 +238,7 @@ const styles = StyleSheet.create({
   cardBig: {
     width: 200,
     height: 200,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   cardsmall: {
     width: 125,

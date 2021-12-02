@@ -182,7 +182,7 @@ const LoginScreen = ({navigation}) => {
                   },
                   styles.shadow,
                 ]}
-                onPress={()=>{navigation.navigate('RegisterScreen')}}>
+                onPress={()=>{navigation.navigate('RuleScreen')}}>
                 <Text style={[globeStyles.font, {fontSize: 20}]}>Register</Text>
               </TouchableOpacity>
               <TouchableOpacity

@@ -28,10 +28,12 @@ export function DrawerContent(props) {
     const name = await AsyncStorage.getItem('userName');
     const lname = await AsyncStorage.getItem('userLname');
     const idcard = await AsyncStorage.getItem('userIdcard');
+    const photo = await AsyncStorage.getItem('userPhoto');
     setProfile({
       name: name,
       lname: lname,
       idcard: idcard,
+      photo
     });
   };
 
@@ -47,7 +49,7 @@ export function DrawerContent(props) {
             <View style={{flexDirection: 'row', marginTop: 15}}>
               <Avatar.Image
                 source={{
-                  uri: 'https://api.adorable.io/avatars/50/abott@adorable.png',
+                  uri: profile.photo,
                 }}
                 size={50}
               />
