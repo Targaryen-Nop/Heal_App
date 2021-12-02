@@ -15,8 +15,20 @@ import {th} from 'date-fns/locale';
 import {format} from 'date-fns';
 
 import {globeStyles} from '../styles/globle';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const DetailMenucheck = ({route, navigation}) => {
+
+
+  const [profile, setProfile] = React.useState({})
+
+  const getProfile = async () => {
+    const photo = await AsyncStorage.getItem('userPhoto');
+    setProfile({
+      photo: photo,
+    });
+  };
+  
   const detail = route.params;
   const yearSub = detail.atk_datetime.substring(0, 4);
   const monthSub = detail.atk_datetime.substring(5, 7);
@@ -38,6 +50,10 @@ const DetailMenucheck = ({route, navigation}) => {
     console.log(day);
     console.log(date);
   };
+
+  React.useEffect(() => {
+    getProfile();
+  }, []);
 
   return (
     <ImageBackground
@@ -78,7 +94,7 @@ const DetailMenucheck = ({route, navigation}) => {
           <View style={{alignItems: 'center'}}>
             <Avatar.Image
               source={{
-                uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
+                uri: profile.photo,
               }}
               size={50}
             />
@@ -109,7 +125,7 @@ const DetailMenucheck = ({route, navigation}) => {
                   style={{
                     borderBottomWidth: 1,
                     marginHorizontal: 20,
-                    paddingBottom: 50,
+                    paddingBottom: 20,
                   }}>
                   <View style={{alignItems: 'center'}}>
                     <Text
@@ -162,7 +178,7 @@ const DetailMenucheck = ({route, navigation}) => {
                   style={{
                     borderBottomWidth: 1,
                     marginHorizontal: 20,
-                    paddingBottom: 50,
+                    paddingBottom: 20,
                   }}>
                   <View style={{alignItems: 'center'}}>
                     <Text
@@ -213,7 +229,7 @@ const DetailMenucheck = ({route, navigation}) => {
                       ผลไม่พบเชื้อ (Negative) เกิดแถบสีม่วง 1 แถบที่ (c)
                     </Text>
                   </View>
-                  <View style={{marginStart: 20, marginTop: 25}}>
+                  <View style={{marginStart: 20, marginTop: 15}}>
                     <Text style={[globeStyles.font, {color: 'green'}]}>
                       The result was not found (Negative)
                     </Text>
@@ -235,7 +251,7 @@ const DetailMenucheck = ({route, navigation}) => {
                   style={{
                     borderBottomWidth: 1,
 
-                    paddingBottom: 50,
+                    paddingBottom: 20,
                   }}>
                   <View style={{alignItems: 'center'}}>
                     <Text
@@ -307,7 +323,7 @@ const DetailMenucheck = ({route, navigation}) => {
                       เพื่อขอรับความช่วยเหลือ ในการรักษาโดยทันที
                     </Text>
                   </View>
-                  <View style={{marginStart: 20, marginTop: 25}}>
+                  <View style={{marginStart: 20, marginTop: 15}}>
                     <Text>      
                             The result was positive, with 2 purple stripes at (C) and
                       (T).

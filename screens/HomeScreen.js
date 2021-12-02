@@ -14,9 +14,21 @@ import {Avatar} from 'react-native-paper';
 import {gl, th} from 'date-fns/locale';
 import {format} from 'date-fns';
 import {globeStyles} from '../styles/globle';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const HomeScreen = ({navigation}) => {
-  const theme = useTheme();
+  const [profile, setProfile] = React.useState({})
+
+  const getProfile = async () => {
+    const photo = await AsyncStorage.getItem('userPhoto');
+    setProfile({
+      photo: photo,
+    });
+  };
+  React.useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
     <ImageBackground
     source={require('../assets/background_gray.jpg')}
@@ -40,7 +52,7 @@ const HomeScreen = ({navigation}) => {
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
               <Avatar.Image
                 source={{
-                  uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
+                  uri: profile.photo,
                 }}
                 size={50}
               />
@@ -92,25 +104,25 @@ const HomeScreen = ({navigation}) => {
                 style={{flex: 1, flexDirection: 'row', padding: 10}}>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner1.jpg')}
+                    source={require('../assets/1.jpg')}
                     style={styles.cardBig}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner2.jpg')}
+                    source={require('../assets/2.jpg')}
                     style={styles.cardBig}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner2.jpg')}
+                    source={require('../assets/3.jpg')}
                     style={styles.cardBig}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner2.jpg')}
+                    source={require('../assets/4.jpg')}
                     style={styles.cardBig}
                   />
                 </TouchableOpacity>
@@ -135,25 +147,25 @@ const HomeScreen = ({navigation}) => {
                 style={{flexDirection: 'row', padding: 10}}>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner1.jpg')}
+                    source={require('../assets/3.jpg')}
                     style={styles.cardsmall}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner1.jpg')}
+                    source={require('../assets/4.jpg')}
                     style={styles.cardsmall}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner1.jpg')}
+                    source={require('../assets/5.jpg')}
                     style={styles.cardsmall}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner1.jpg')}
+                    source={require('../assets/6.jpg')}
                     style={styles.cardsmall}
                   />
                 </TouchableOpacity>
@@ -178,25 +190,25 @@ const HomeScreen = ({navigation}) => {
                 style={{flexDirection: 'row', padding: 10}}>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner1.jpg')}
+                    source={require('../assets/6.jpg')}
                     style={styles.cardsmall}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner1.jpg')}
+                    source={require('../assets/7.jpg')}
                     style={styles.cardsmall}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner1.jpg')}
+                    source={require('../assets/8.jpg')}
                     style={styles.cardsmall}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={{margin: 10}}>
                   <Image
-                    source={require('../assets/banners/food-banner1.jpg')}
+                    source={require('../assets/9.jpg')}
                     style={styles.cardsmall}
                   />
                 </TouchableOpacity>
@@ -221,10 +233,12 @@ const styles = StyleSheet.create({
   cardBig: {
     width: 200,
     height: 200,
+    resizeMode: 'contain'
   },
   cardsmall: {
     width: 125,
     height: 125,
+    resizeMode: 'contain',
   },
   feednews: {
     backgroundColor: '#fff',

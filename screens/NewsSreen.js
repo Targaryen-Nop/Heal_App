@@ -18,7 +18,6 @@ import {globeStyles} from '../styles/globle';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-
 import axios from 'axios';
 
 import {AuthContext} from '../components/context';
@@ -26,8 +25,6 @@ import {AuthContext} from '../components/context';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const NewsSreen = ({navigation}) => {
-
-
   const [profile, setProfile] = React.useState({});
 
   const getProfile = async () => {
@@ -35,11 +32,13 @@ const NewsSreen = ({navigation}) => {
     const lname = await AsyncStorage.getItem('userLname');
     const phone = await AsyncStorage.getItem('userPhone');
     const idcard = await AsyncStorage.getItem('userIdcard');
+    const photo = await AsyncStorage.getItem('userPhoto');
     setProfile({
       name: name,
       lname: lname,
       phone: phone,
       idcard: idcard,
+      photo: photo,
     });
   };
   React.useEffect(() => {
@@ -85,11 +84,8 @@ const NewsSreen = ({navigation}) => {
           <View style={[globeStyles.cardinside]}>
             <TouchableOpacity
               style={{backgroundColor: '#000', width: 100, height: 100}}
-              onPress={() => {
-                console.log(new Date())
-              }}>
-             
-            </TouchableOpacity>
+              onPress={()=>console.log(profile)}
+            />
           </View>
         </View>
       </ScrollView>

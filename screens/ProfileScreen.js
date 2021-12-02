@@ -17,8 +17,21 @@ import {format} from 'date-fns';
 import {globeStyles} from '../styles/globle';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const ProfileScreen = ({navigation}) => {
+
+  const [profile, setProfile] = React.useState({})
+
+  const getProfile = async () => {
+    const photo = await AsyncStorage.getItem('userPhoto');
+    setProfile({
+      photo: photo,
+    });
+  };
+  React.useEffect(() => {
+    getProfile();
+  }, []);
   return (
     <ImageBackground
       source={require('../assets/background_gray.jpg')}
@@ -59,7 +72,7 @@ const ProfileScreen = ({navigation}) => {
             <View style={{alignItems:'center'}}>
               <Avatar.Image
                 source={{
-                  uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
+                  uri: profile.photo,
                 }}
                 size={50}
               />

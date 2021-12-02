@@ -24,7 +24,20 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const MenuCheckATKScreen = ({route, navigation}) => {
+
+
+  
+
+
   const [detailUser, setDetailUser] = React.useState([]);
+  const [profile, setProfile] = React.useState({});
+
+  const getProfile = async () => {
+    const photo = await AsyncStorage.getItem('userPhoto');
+    setProfile({
+      photo
+    });
+  };
 
   const getData = async idcard => {
     const dataUrl = 'http://pmtechapp.lnw.mn/heal_api/getATK.php';
@@ -39,6 +52,7 @@ const MenuCheckATKScreen = ({route, navigation}) => {
       const idcard = await AsyncStorage.getItem('userIdcard');
     await getData(idcard);
     },1000)
+    getProfile()
   }, []);
 
   return (
@@ -80,7 +94,7 @@ const MenuCheckATKScreen = ({route, navigation}) => {
           <View style={{alignItems: 'center'}}>
             <Avatar.Image
               source={{
-                uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
+                uri: profile.photo,
               }}
               size={50}
             />
@@ -123,7 +137,8 @@ const MenuCheckATKScreen = ({route, navigation}) => {
                             รายงานการตรวจ
                           </Text>
                           <Text style={[globeStyles.fontWhite, {fontSize: 15}]}>
-                            {detail.atk_datetime}
+                            {detail.atk_datetime.substring(0, 10)}{'  '}
+                            {detail.atk_datetime.substring(10, 15)} น.
                           </Text>
                         </View>
                         <TouchableOpacity

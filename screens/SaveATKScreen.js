@@ -36,8 +36,10 @@ const SaveATKScreen = ({navigation}) => {
 
   const getProfile = async () => {
     const idcard = await AsyncStorage.getItem('userIdcard');
+    const photo = await AsyncStorage.getItem('userPhoto');
     setProfile({
-      idcard: idcard,
+      idcard,
+      photo
     });
   };
 
@@ -82,16 +84,14 @@ const SaveATKScreen = ({navigation}) => {
     }
   };
 
-  const onUpload = async (val) => {
+  const onUpload = async () => {
     const urlUpload = 'http://pmtechapp.lnw.mn/heal_api/atk.php';
     const resp = await axios.post(urlUpload, {
-      file_attachment:"dwa",
+      file_attachment:image.base64,
       customer_idcard: profile.idcard,
     });
-    if(true){
-      setIsEnabled(!val)
-    }
-    
+    navigation.navigate('Profile')
+    console.log(resp.data)
   };
   return (
     <View style={{flex: 1}}>
@@ -133,7 +133,7 @@ const SaveATKScreen = ({navigation}) => {
             <View style={{alignItems: 'center'}}>
               <Avatar.Image
                 source={{
-                  uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
+                  uri: profile.photo,
                 }}
                 size={50}
               />
@@ -158,12 +158,12 @@ const SaveATKScreen = ({navigation}) => {
           <Text />
           <View style={[globeStyles.cardinside]}>
             <View style={{alignItems: 'center'}}>
-              <Text style={[styles.text, globeStyles.fontBold]}>
+              <Text style={[styles.text, globeStyles.fontBold,{marginBottom:40}]}>
                 บันทึกประวัติ ATK
               </Text>
               <Image
               
-                source={require('../assets/atk_negative11.jpg')}
+                source={image.uri ? {uri:image.uri} : require('../assets/atk_negative11.jpg')}
                 style={{
                   height: 200,
                   width: 200,
@@ -174,7 +174,7 @@ const SaveATKScreen = ({navigation}) => {
                 imageStyle={{borderRadius: 15}}
               />
               <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={[
                     {
                       borderTopStartRadius: 25,
@@ -205,9 +205,9 @@ const SaveATKScreen = ({navigation}) => {
                     onChange(isEnabled);
                   }}>
                   <Text style={globeStyles.fontWhite}>ไม่ติดเชื้อ</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
-              <View style={{flexDirection: 'row', marginTop: 25}}>
+              <View style={{flexDirection: 'row', marginTop: 50}}>
                 <TouchableOpacity
                   style={[
                     {
@@ -236,7 +236,7 @@ const SaveATKScreen = ({navigation}) => {
                     },
                     styles.shadow,
                   ]}
-                  onPress={()=>onUpload(isEnabled)}>
+                  onPress={onUpload}>
                   <Text style={[globeStyles.fontWhite]}>บันทึก</Text>
                 </TouchableOpacity>
               </View>
